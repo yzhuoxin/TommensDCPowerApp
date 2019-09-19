@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassRulesInfo>
+   <DeviceClass ClassID="D3" ClassName="三位显示线性电源">
+      <ClassTemplate>K3</ClassTemplate><!-- 设备类型地址模版 -->      
+      <ShotCutTemplate></ShotCutTemplate><!-- 设备开关快捷键模版 -->      
+      <EnableProgram>False</EnableProgram>
+      <EnableProtect>True</EnableProtect>
+    </DeviceClass>
+   <DeviceClass ClassID="K3" ClassName="三位显示线性电源">
+      <ClassTemplate>K3</ClassTemplate><!-- 设备类型地址模版 -->      
+      <ShotCutTemplate></ShotCutTemplate><!-- 设备开关快捷键模版 -->      
+      <EnableProgram>False</EnableProgram>
+      <EnableProtect>True</EnableProtect>
+   </DeviceClass>
+   <DeviceClass ClassID="DF" ClassName="四位显示线性电源">
+      <ClassTemplate>KF</ClassTemplate><!-- 设备类型地址模版 -->      
+      <ShotCutTemplate></ShotCutTemplate><!-- 设备开关快捷键模版 -->      
+      <EnableProgram>False</EnableProgram>
+      <EnableProtect>True</EnableProtect>
+    </DeviceClass>
+   <DeviceClass ClassID="KF" ClassName="四位显示开关电源">
+      <ClassTemplate>KF</ClassTemplate><!-- 设备类型地址模版 -->      
+      <ShotCutTemplate></ShotCutTemplate><!-- 设备开关快捷键模版 -->      
+      <EnableProgram>False</EnableProgram>
+      <EnableProtect>True</EnableProtect>
+   </DeviceClass>
+   <DeviceClass ClassID="DP" ClassName="四位显示程控线性电源">
+      <ClassTemplate>KP</ClassTemplate><!-- 设备类型地址模版 -->      
+      <ShotCutTemplate>DP</ShotCutTemplate><!-- 设备开关快捷键模版 -->      
+      <EnableProgram>True</EnableProgram>
+      <EnableProtect>False</EnableProtect>
+    </DeviceClass>
+   <DeviceClass ClassID="KP" ClassName="四位显示程控开关电源">
+      <ClassTemplate>KP</ClassTemplate><!-- 设备类型地址模版 -->      
+      <ShotCutTemplate>DP</ShotCutTemplate><!-- 设备开关快捷键模版 -->      
+      <EnableProgram>True</EnableProgram>
+       <EnableProtect>False</EnableProtect>
+   </DeviceClass>
+   <DeviceClass ClassID="SP" ClassName="五位显示蓝屏开关电源">
+      <ClassTemplate>SP</ClassTemplate><!-- 设备类型地址模版 -->      
+      <ShotCutTemplate></ShotCutTemplate><!-- 设备开关快捷键模版 -->      
+      <EnableProgram>True</EnableProgram>
+       <EnableProtect>False</EnableProtect>
+   </DeviceClass>
+
+   <DeviceModel ModelID="305" ModelName="30伏5安">
+      <MaxVoltage>30</MaxVoltage>
+      <MaxCurrent>5</MaxCurrent>
+      <MaxPower>150</MaxPower>
+   </DeviceModel>
+   <DeviceModel ModelID="3010" ModelName="30伏10安">
+      <MaxVoltage>30</MaxVoltage>
+      <MaxCurrent>10</MaxCurrent>
+      <MaxPower>300</MaxPower>
+   </DeviceModel>
+   <DeviceModel ModelID="605" ModelName="60伏5安">
+      <MaxVoltage>60</MaxVoltage>
+      <MaxCurrent>5</MaxCurrent>
+      <MaxPower>300</MaxPower>
+   </DeviceModel>
+   <DeviceModel ModelID="1003" ModelName="100伏5安">
+      <MaxVoltage>100</MaxVoltage>
+      <MaxCurrent>5</MaxCurrent>
+      <MaxPower>300</MaxPower>
+   </DeviceModel>  
+   <DeviceModel ModelID="1520" ModelName="15伏20安">
+      <MaxVoltage>15</MaxVoltage>
+      <MaxCurrent>20</MaxCurrent>
+      <MaxPower>300</MaxPower>
+   </DeviceModel>
+   <DeviceModel ModelID="1502" ModelName="150伏2安">
+      <MaxVoltage>150</MaxVoltage>
+      <MaxCurrent>2</MaxCurrent>
+      <MaxPower>300</MaxPower>
+   </DeviceModel>
+   <DeviceModel ModelID="303" ModelName="30伏3安">
+      <MaxVoltage>30</MaxVoltage>
+      <MaxCurrent>3</MaxCurrent>
+      <MaxPower>90</MaxPower>
+   </DeviceModel>
+   <DeviceModel ModelID="603" ModelName="60伏3安">
+      <MaxVoltage>60</MaxVoltage>
+      <MaxCurrent>3</MaxCurrent>
+      <MaxPower>180</MaxPower>
+   </DeviceModel>
+   <DeviceModel ModelID="1501" ModelName="150伏1安">
+      <MaxVoltage>150</MaxVoltage>
+      <MaxCurrent>1</MaxCurrent>
+      <MaxPower>150</MaxPower>
+   </DeviceModel>
+   <DeviceModel ModelID="65535" ModelName="定制版">
+      <MaxVoltage>1000</MaxVoltage>
+      <MaxCurrent>100</MaxCurrent>
+      <MaxPower>2200</MaxPower>
+   </DeviceModel>
+</ClassRulesInfo>

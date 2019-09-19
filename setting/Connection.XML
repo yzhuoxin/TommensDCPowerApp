@@ -1,0 +1,7 @@
+<Connection>
+  <Host HostName="113.105.128.102" Port="3306">
+    <UserName>root</UserName>
+    <Password>abc123456</Password>
+    <DBname>Wstationdata</DBname>
+  </Host>
+</Connection>

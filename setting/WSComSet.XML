@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WSationSet>
+  <Sation WSname="默认设备" ComDelayTime="40">
+    <RecordChangeValue>True</RecordChangeValue>
+    <PortName>COM1</PortName>
+    <HostAddress>1</HostAddress>
+    <SampRate>60</SampRate>
+    <BaudRate>9600</BaudRate>
+    <WriteTimeOut>500</WriteTimeOut>
+    <ReadTimeOut>500</ReadTimeOut>
+    
+  </Sation>
+</WSationSet>

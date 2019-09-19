@@ -1,0 +1,9 @@
+﻿<AppSet>
+  <StartUp StartAutoDelData="True" DayCount="30">
+    <ScaleValueType>Fixed</ScaleValueType>
+    <ChartShowCount>100</ChartShowCount>
+    <Title>直流电源上位机软件</Title>
+   </StartUp>
+ 
+  
+</AppSet>
