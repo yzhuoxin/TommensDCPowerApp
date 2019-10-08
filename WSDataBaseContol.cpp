@@ -14,7 +14,7 @@ bool WSDataBaseContol::open(QString databaseFileName)
     {
        if  (!this->WSdatabase.open())
        {
-           qDebug()<< "Error: Failed to connect database." << WSdatabase.lastError();
+           qCritical()<<"Error: Failed to connect database." << WSdatabase.lastError();
            return false;
 
        }else {
@@ -24,6 +24,32 @@ bool WSDataBaseContol::open(QString databaseFileName)
 
     }else {
         return true;
+
+}
+}
+bool WSDataBaseContol::WriteSQLWSCollect(QString nMname, QString nChannel, float nVoltage, float nCurrent, float nPower, QDateTime nSampleTime, QString nPort, int nMddress)
+{
+    if (this->WSdatabase.isOpen())
+    {
+       this->dblock.lockForWrite();
+          QSqlQuery WriteWSquery(this->WSdatabase);
+          WriteWSquery.prepare("insert into  ElectValue (Mname,Channel,Voltage,Current,Power,SampTime,Port,MAddress)values \
+                                     (:nMname,:nChannel,:nVoltage,:nCurrent,:nPower,:nSampTime,:nPort,:nMddress)");
+          WriteWSquery.bindValue(":nMname",nMname);
+          WriteWSquery.bindValue(":nChannel",nChannel);
+          WriteWSquery.bindValue(":nVoltage",nVoltage);
+          WriteWSquery.bindValue(":nCurrent",nCurrent);
+          WriteWSquery.bindValue(":nPower",nPower);
+          WriteWSquery.bindValue(":nSampTime",nSampleTime);
+          WriteWSquery.bindValue(":nPort",nPort);
+          WriteWSquery.bindValue(":nMddress",nMddress);
+          WriteWSquery.exec();
+         this->dblock.unlock();
+         return true;
+
+    }else {
+        qCritical()<<"Error:open database before";
+        return false;
 
 }
 }

@@ -7,6 +7,8 @@
 #include <QSqlQueryModel>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QReadWriteLock>
+#include <qdatetime.h>
 enum MaxVCP
 {
     MaxVoltage = 0,
@@ -15,6 +17,8 @@ enum MaxVCP
 };
 class WSDataBaseContol
 {
+private:
+    QReadWriteLock dblock;
 public:
     WSDataBaseContol();
    ~WSDataBaseContol();
@@ -22,7 +26,7 @@ public:
     QString databasePath;
  public:
     bool open(QString databaseFileName);
-    bool WriteSQLWSCollect(QString nMname,QString nChannel,float nVoltage,float nCurrent ,float nPower,QDateTime nSampleTime,QString nPort ,int nMddress );
+    bool WriteSQLWSCollect(QString nMname,QString nChannel,float nVoltage,float nCurrent ,float nPower,QDateTime  nSampleTime,QString nPort ,int nMddress );
     QList<QString> * GetMname(QList<QString> * nOutDevieNameList );
     QList<QString> * GetChannelName(QString nDeviceDeviceName,QList<QString> *nOutDevieChannelList );
     bool  GetAllDatabyDeviceName( QSqlQueryModel * OutGetDataHistoryDataTable);
@@ -47,9 +51,12 @@ public:
     bool  GetLateData(QString nWSname, QSqlQueryModel * OutGetDataHistoryDataTable);
     bool  GetLateData(QString nWSname,QString nChannel, QSqlQueryModel * OutGetDataHistoryDataTable);
 
+    bool DelDataHistory(QDateTime npreDate);
+    bool  DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate);
     bool  DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate, QString nWSname);
      bool DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate, QString nWSname,QString nChannel);
-     bool DelDataHistory()
+     bool DelDataHistory(int nDelID);
+     bool SelectdisDeviceName(QSqlQueryModel *OutGetDeviceNameAndChannel);
 
 
 };
