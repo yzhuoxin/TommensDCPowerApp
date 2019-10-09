@@ -53,6 +53,31 @@ bool WSDataBaseContol::WriteSQLWSCollect(QString nMname, QString nChannel, float
 
 }
 }
+bool WSDataBaseContol::GetMname(QList<QString> *nOutDevieNameList)
+{
+    if (this->WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery getMnameQuery(WSdatabase);
+        getMnameQuery.prepare("select distinct(Mname) from  ElectValue");
+        getMnameQuery.executedQuery();
+        while(getMnameQuery.next())
+        {
+           nOutDevieNameList->append(getMnameQuery.value("Mname").toString());
+        }
+        dblock.unlock();
+        return true;
+
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+}
+
+}
+bool WSDataBaseContol::GetChannelName(QString nDeviceDeviceName, QList<QString> *nOutDevieChannelList)
+{
+    if (WSdatabase.isOpen())
+}
 WSDataBaseContol::~WSDataBaseContol()
 {
     if (WSdatabase.isOpen())

@@ -27,8 +27,8 @@ public:
  public:
     bool open(QString databaseFileName);
     bool WriteSQLWSCollect(QString nMname,QString nChannel,float nVoltage,float nCurrent ,float nPower,QDateTime  nSampleTime,QString nPort ,int nMddress );
-    QList<QString> * GetMname(QList<QString> * nOutDevieNameList );
-    QList<QString> * GetChannelName(QString nDeviceDeviceName,QList<QString> *nOutDevieChannelList );
+    bool GetMname(QList<QString> * nOutDevieNameList );
+    bool  GetChannelName(QString nDeviceDeviceName,QList<QString> *nOutDevieChannelList );
     bool  GetAllDatabyDeviceName( QSqlQueryModel * OutGetDataHistoryDataTable);
     bool  GetAllDatabyDeviceName(QString  nMname, QSqlQueryModel * nChartDataTable);
     bool  GetAllDatabyDeviceName(QString  nMname,QString nChannel, QSqlQueryModel * nChartDataTable);
