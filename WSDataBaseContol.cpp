@@ -77,7 +77,70 @@ bool WSDataBaseContol::GetMname(QList<QString> *nOutDevieNameList)
 bool WSDataBaseContol::GetChannelName(QString nDeviceDeviceName, QList<QString> *nOutDevieChannelList)
 {
     if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery getchQuery(WSdatabase);
+        getchQuery.prepare("select distinct(Channel) from ElectValue where Mname=:Mname");
+        getchQuery.bindValue(":Mname",nDeviceDeviceName);
+        getchQuery.exec();
+        while(getchQuery.next())
+        {
+            nOutDevieChannelList->append(getchQuery.value("Channal").toString());
+
+        }
+        dblock.unlock();
+    }
 }
+bool WSDataBaseContol::GetAllDatabyDeviceName(QSqlQueryModel *OutGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+
+        OutGetDataHistoryDataTable->setQuery("select * from  ElectValue order by id desc  ",WSdatabase);
+        while(OutGetDataHistoryDataTable->canFetchMore())
+        {
+            OutGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+
+    }
+}
+bool WSDataBaseContol::GetAllDatabyDeviceName(QString nMname, QSqlQueryModel *OutGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        gethQuery.prepare("select * from  ElectValue where Mname=:Mname  ");
+        gethQuery.bindValue(":Mname",nMname);
+        OutGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(OutGetDataHistoryDataTable->canFetchMore())
+        {
+            OutGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+
+    }
+}
+bool WSDataBaseContol::GetLateData(QSqlQueryModel *OutGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+
+        OutGetDataHistoryDataTable->setQuery("select * from  ElectValue where id in (select MAX(id) FROM  ElectValue GROUP BY Mname,Channel) ",WSdatabase);
+        while(OutGetDataHistoryDataTable->canFetchMore())
+        {
+            OutGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+
+    }
+}
+
+
 WSDataBaseContol::~WSDataBaseContol()
 {
     if (WSdatabase.isOpen())
