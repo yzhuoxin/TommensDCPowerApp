@@ -89,7 +89,11 @@ bool WSDataBaseContol::GetChannelName(QString nDeviceDeviceName, QList<QString> 
 
         }
         dblock.unlock();
-    }
+        return  true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+}
 }
 bool WSDataBaseContol::GetAllDatabyDeviceName(QSqlQueryModel *OutGetDataHistoryDataTable)
 {
@@ -103,9 +107,15 @@ bool WSDataBaseContol::GetAllDatabyDeviceName(QSqlQueryModel *OutGetDataHistoryD
             OutGetDataHistoryDataTable->fetchMore();
         }
         dblock.unlock();
+        return  true;
 
     }
-}
+        else {
+                qCritical()<<"before open database please!";
+                return  false;
+        }
+    }
+
 bool WSDataBaseContol::GetAllDatabyDeviceName(QString nMname, QSqlQueryModel *OutGetDataHistoryDataTable)
 {
     if (WSdatabase.isOpen())
@@ -121,8 +131,11 @@ bool WSDataBaseContol::GetAllDatabyDeviceName(QString nMname, QSqlQueryModel *Ou
             OutGetDataHistoryDataTable->fetchMore();
         }
         dblock.unlock();
-
-    }
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+}
 }
 bool WSDataBaseContol::GetLateData(QSqlQueryModel *OutGetDataHistoryDataTable)
 {
