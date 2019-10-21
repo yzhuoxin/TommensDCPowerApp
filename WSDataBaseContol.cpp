@@ -1,6 +1,7 @@
 #include "WSDataBaseContol.h"
 
 #include "writecomlogs.h"
+enum MaxVCP;
 WSDataBaseContol::WSDataBaseContol()
 {
 
@@ -95,16 +96,16 @@ bool WSDataBaseContol::GetChannelName(QString nDeviceDeviceName, QList<QString> 
         return  false;
 }
 }
-bool WSDataBaseContol::GetAllDatabyDeviceName(QSqlQueryModel *OutGetDataHistoryDataTable)
+bool WSDataBaseContol::GetAllDatabyDeviceName(QSqlQueryModel *outGetDataHistoryDataTable)
 {
     if (WSdatabase.isOpen())
     {
         dblock.lockForRead();
 
-        OutGetDataHistoryDataTable->setQuery("select * from  ElectValue order by id desc  ",WSdatabase);
-        while(OutGetDataHistoryDataTable->canFetchMore())
+        outGetDataHistoryDataTable->setQuery("select * from  ElectValue order by id desc  ",WSdatabase);
+        while(outGetDataHistoryDataTable->canFetchMore())
         {
-            OutGetDataHistoryDataTable->fetchMore();
+            outGetDataHistoryDataTable->fetchMore();
         }
         dblock.unlock();
         return  true;
@@ -116,7 +117,7 @@ bool WSDataBaseContol::GetAllDatabyDeviceName(QSqlQueryModel *OutGetDataHistoryD
         }
     }
 
-bool WSDataBaseContol::GetAllDatabyDeviceName(QString nMname, QSqlQueryModel *OutGetDataHistoryDataTable)
+bool WSDataBaseContol::GetAllDatabyDeviceName(QString nMname, QSqlQueryModel *outGetDataHistoryDataTable)
 {
     if (WSdatabase.isOpen())
     {
@@ -124,11 +125,11 @@ bool WSDataBaseContol::GetAllDatabyDeviceName(QString nMname, QSqlQueryModel *Ou
         QSqlQuery gethQuery(WSdatabase);
         gethQuery.prepare("select * from  ElectValue where Mname=:Mname  ");
         gethQuery.bindValue(":Mname",nMname);
-        OutGetDataHistoryDataTable->setQuery(gethQuery);
+        outGetDataHistoryDataTable->setQuery(gethQuery);
 
-        while(OutGetDataHistoryDataTable->canFetchMore())
+        while(outGetDataHistoryDataTable->canFetchMore())
         {
-            OutGetDataHistoryDataTable->fetchMore();
+            outGetDataHistoryDataTable->fetchMore();
         }
         dblock.unlock();
         return true;
@@ -137,16 +138,269 @@ bool WSDataBaseContol::GetAllDatabyDeviceName(QString nMname, QSqlQueryModel *Ou
         return  false;
 }
 }
-bool WSDataBaseContol::GetLateData(QSqlQueryModel *OutGetDataHistoryDataTable)
+bool WSDataBaseContol::GetAllDatabyDeviceName(QString nMname, QString nChannel, QSqlQueryModel *outGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        gethQuery.prepare("select * from  ElectValue where Mname=:Mname and Channel=:NChannel ");
+        gethQuery.bindValue(":Mname",nMname);
+        gethQuery.bindValue(":NChannel",nChannel);
+        outGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+}
+}
+
+
+bool  WSDataBaseContol::GetDataHistoryByDeviceName(QSqlQueryModel *outGetDataHistoryDataTable)
+{
+
+
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+
+        outGetDataHistoryDataTable->setQuery("select * from  ElectValue order by id desc  ",WSdatabase);
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return  true;
+
+    }
+        else {
+                qCritical()<<"before open database please!";
+                return  false;
+        }
+}
+
+bool WSDataBaseContol::GetDataHistoryByDeviceName(QDateTime nBeginDate,  QString nMname, QSqlQueryModel *outGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        gethQuery.prepare("select * from  ElectValue where Mname=:Mname  and SampTime>=:nBeginDate ");
+        gethQuery.bindValue(":Mname",nMname);
+        gethQuery.bindValue(":nBeginDate",nBeginDate);
+        outGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+}
+}
+bool WSDataBaseContol::GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nMname, QSqlQueryModel * outGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        gethQuery.prepare("select * from  ElectValue where Mname=:Mname  and SampTime>=:nBeginDate and SampTime<=:nLastDate");
+        gethQuery.bindValue(":Mname",nMname);
+        gethQuery.bindValue(":nBeginDate",nBeginDate);
+        gethQuery.bindValue(":nLastDate",nLastDate);
+        outGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+    }
+}
+
+bool  WSDataBaseContol::GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nMname,QString nChannel, QSqlQueryModel * outGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        gethQuery.prepare("select * from  ElectValue where Mname=:Mname and Channel=:nChannel and SampTime>=:nBeginDate and SampTime<=:nLastDate");
+        gethQuery.bindValue(":Mname",nMname);
+        gethQuery.bindValue(":nBeginDate",nBeginDate);
+        gethQuery.bindValue(":nLastDate",nLastDate);
+         gethQuery.bindValue(":nChannel",nChannel);
+        outGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+    }
+}
+bool  WSDataBaseContol::GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nMname,MaxVCP nMaxVCP, QSqlQueryModel * outGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        if (nMaxVCP==MaxVCP::MaxVoltage)
+        {
+            gethQuery.prepare("select * from  ElectValue where Mname=:Mname  and SampTime>=:nBeginDate and SampTime<=:nLastDate and Voltage=Max(Voltage)");
+
+        }else if (nMaxVCP==MaxVCP::MaxCurrent)
+        {
+             gethQuery.prepare("select * from  ElectValue where Mname=:Mname  and SampTime>=:nBeginDate and SampTime<=:nLastDate and Current=Max(Current)");
+        }else if (nMaxVCP==MaxVCP::MaxPower)
+        {
+            gethQuery.prepare("select * from  ElectValue where Mname=:Mname  and SampTime>=:nBeginDate and SampTime<=:nLastDate and Power=Max(Power)");
+        }
+
+        gethQuery.bindValue(":Mname",nMname);
+        gethQuery.bindValue(":nBeginDate",nBeginDate);
+        gethQuery.bindValue(":nLastDate",nLastDate);
+
+        outGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+    }
+}
+bool  WSDataBaseContol::GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nMname,QString nChannel, MaxVCP nMaxVCP, QSqlQueryModel * outGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        if (nMaxVCP==MaxVCP::MaxVoltage)
+        {
+            gethQuery.prepare("select * from  ElectValue where Mname=:Mname and Channel=:nChannel and SampTime>=:nBeginDate and SampTime<=:nLastDate and Voltage=Max(Voltage)");
+
+        }else if (nMaxVCP==MaxVCP::MaxCurrent)
+        {
+             gethQuery.prepare("select * from  ElectValue where Mname=:Mname and  Channel=:nChannel  and SampTime>=:nBeginDate and SampTime<=:nLastDate and Current=Max(Current)");
+        }else if (nMaxVCP==MaxVCP::MaxPower)
+        {
+            gethQuery.prepare("select * from  ElectValue where Mname=:Mname and Channel=:nChannel  and SampTime>=:nBeginDate and SampTime<=:nLastDate and Power=Max(Power)");
+        }
+
+        gethQuery.bindValue(":Mname",nMname);
+        gethQuery.bindValue(":nBeginDate",nBeginDate);
+        gethQuery.bindValue(":nLastDate",nLastDate);
+         gethQuery.bindValue(":nChannel",nChannel);
+        outGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+    }
+}
+bool WSDataBaseContol::GetDataHistoryByDeviceName(QString nMname, int lastNum, QSqlQueryModel * outGetDataHistoryDataTable)
+{
+
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        gethQuery.prepare(" select *from  ElectValue where   Mname=@nMname  order by id  desc limit :nlastNum offset 0");
+        gethQuery.bindValue(":Mname",nMname);
+        gethQuery.bindValue(":nlastNum",lastNum);
+        outGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+    }
+
+}
+
+   //从bgein开始取几条数据
+bool WSDataBaseContol::WSDataBaseContol::GetDataHistoryByDeviceName(QString nMname, QString nChannel, int lastNum, QSqlQueryModel * outGetDataHistoryDataTable)
+{
+    if (WSdatabase.isOpen())
+    {
+        dblock.lockForRead();
+        QSqlQuery gethQuery(WSdatabase);
+        gethQuery.prepare(" select *from  ElectValue where   Mname=@nMname  and Channel=:nChannel order by id  desc limit :nlastNum offset 0");
+        gethQuery.bindValue(":Mname",nMname);
+        gethQuery.bindValue(":nChannel",nChannel);
+        gethQuery.bindValue(":nlastNum",lastNum);
+        outGetDataHistoryDataTable->setQuery(gethQuery);
+
+        while(outGetDataHistoryDataTable->canFetchMore())
+        {
+            outGetDataHistoryDataTable->fetchMore();
+        }
+        dblock.unlock();
+        return true;
+    }else {
+        qCritical()<<"before open database please!";
+        return  false;
+    }
+
+}
+
+//
+bool   GetDataHistoryByDeviceName(QDateTime nbegindate, QString nMname, int lastNum, QSqlQueryModel * outGetDataHistoryDataTable);
+bool   GetDataHistoryByDeviceName(QDateTime nbegindate, QString nMname, QString nChannel,int lastNum, QSqlQueryModel * outGetDataHistoryDataTable);
+
+bool  GetLateData(QSqlQueryModel * outGetDataHistoryDataTable);
+bool  GetLateData(QString nMname, QSqlQueryModel * outGetDataHistoryDataTable);
+bool  GetLateData(QString nMname,QString nChannel, QSqlQueryModel * outGetDataHistoryDataTable);
+
+bool DelDataHistory(QDateTime npreDate);
+bool  DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate);
+bool  DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate, QString nMname);
+ bool DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate, QString nMname,QString nChannel);
+ bool DelDataHistory(int nDelID);
+ bool SelectdisDeviceName(QSqlQueryModel *OutGetDeviceNameAndChannel);
+
+bool WSDataBaseContol::GetLateData(QSqlQueryModel *outGetDataHistoryDataTable)
 {
     if (WSdatabase.isOpen())
     {
         dblock.lockForRead();
 
-        OutGetDataHistoryDataTable->setQuery("select * from  ElectValue where id in (select MAX(id) FROM  ElectValue GROUP BY Mname,Channel) ",WSdatabase);
-        while(OutGetDataHistoryDataTable->canFetchMore())
+        outGetDataHistoryDataTable->setQuery("select * from  ElectValue where id in (select MAX(id) FROM  ElectValue GROUP BY Mname,Channel) ",WSdatabase);
+        while(outGetDataHistoryDataTable->canFetchMore())
         {
-            OutGetDataHistoryDataTable->fetchMore();
+            outGetDataHistoryDataTable->fetchMore();
         }
         dblock.unlock();
 

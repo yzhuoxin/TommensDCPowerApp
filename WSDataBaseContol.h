@@ -9,11 +9,11 @@
 #include <QSqlQuery>
 #include <QReadWriteLock>
 #include <qdatetime.h>
-enum MaxVCP
+enum class MaxVCP
 {
-    MaxVoltage = 0,
-    MaxCurrent = 1,
-    MaxPower = 2,
+   MaxVoltage = 0,
+   MaxCurrent = 1,
+   MaxPower = 2,
 };
 class WSDataBaseContol
 {
@@ -29,32 +29,32 @@ public:
     bool WriteSQLWSCollect(QString nMname,QString nChannel,float nVoltage,float nCurrent ,float nPower,QDateTime  nSampleTime,QString nPort ,int nMddress );
     bool GetMname(QList<QString> * nOutDevieNameList );
     bool  GetChannelName(QString nDeviceDeviceName,QList<QString> *nOutDevieChannelList );
-    bool  GetAllDatabyDeviceName( QSqlQueryModel * OutGetDataHistoryDataTable);
-    bool  GetAllDatabyDeviceName(QString  nMname, QSqlQueryModel * nChartDataTable);
-    bool  GetAllDatabyDeviceName(QString  nMname,QString nChannel, QSqlQueryModel * nChartDataTable);
+    bool  GetAllDatabyDeviceName( QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetAllDatabyDeviceName(QString  nMname, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetAllDatabyDeviceName(QString  nMname,QString nChannel, QSqlQueryModel * outGetDataHistoryDataTable);
 
-    bool  GetDataHistoryByDeviceName(QSqlQueryModel *OutGetDataHistoryDataTable);
+    bool  GetDataHistoryByDeviceName(QSqlQueryModel *outGetDataHistoryDataTable);
 
-    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate,  QString nWSname, QSqlQueryModel *OutGetDataHistoryDataTable);
-    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nWSname, QSqlQueryModel * OutGetDataHistoryDataTable);
-    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nWSname,QString nChannel, QSqlQueryModel * OutGetDataHistoryDataTable);
-    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nWSname,MaxVCP nMaxVCP, QSqlQueryModel * OutGetDataHistoryDataTable);
-    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nWSname,QString nChannel, MaxVCP nMaxVCP, QSqlQueryModel * OutGetDataHistoryDataTable);
-    bool  GetDataHistoryByDeviceName(QString nWSname, int lastNum, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate,  QString nMname, QSqlQueryModel *outGetDataHistoryDataTable);
+    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nMname, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nMname,QString nChannel, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nMname,MaxVCP nMaxVCP, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetDataHistoryByDeviceName(QDateTime nBeginDate, QDateTime nLastDate, QString nMname,QString nChannel, MaxVCP nMaxVCP, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetDataHistoryByDeviceName(QString nMname, int lastNum, QSqlQueryModel * outGetDataHistoryDataTable);
        //从bgein开始取几条数据
-    bool  GetDataHistoryByDeviceName(QString nWSname, QString nChannel, int lastNum, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetDataHistoryByDeviceName(QString nMname, QString nChannel, int lastNum, QSqlQueryModel * outGetDataHistoryDataTable);
     //
-    bool   GetDataHistoryByDeviceName(QDateTime nbegindate, QString nWSname, int lastNum, QSqlQueryModel * OutGetDataHistoryDataTable);
-    bool   GetDataHistoryByDeviceName(QDateTime nbegindate, QString nWSname, QString nChannel,int lastNum, QSqlQueryModel * OutGetDataHistoryDataTable);
+    bool   GetDataHistoryByDeviceName(QDateTime nbegindate, QString nMname, int lastNum, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool   GetDataHistoryByDeviceName(QDateTime nbegindate, QString nMname, QString nChannel,int lastNum, QSqlQueryModel * outGetDataHistoryDataTable);
 
-    bool  GetLateData(QSqlQueryModel * OutGetDataHistoryDataTable);
-    bool  GetLateData(QString nWSname, QSqlQueryModel * OutGetDataHistoryDataTable);
-    bool  GetLateData(QString nWSname,QString nChannel, QSqlQueryModel * OutGetDataHistoryDataTable);
+    bool  GetLateData(QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetLateData(QString nMname, QSqlQueryModel * outGetDataHistoryDataTable);
+    bool  GetLateData(QString nMname,QString nChannel, QSqlQueryModel * outGetDataHistoryDataTable);
 
     bool DelDataHistory(QDateTime npreDate);
     bool  DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate);
-    bool  DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate, QString nWSname);
-     bool DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate, QString nWSname,QString nChannel);
+    bool  DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate, QString nMname);
+     bool DelDataHistory(QDateTime nBeginDate, QDateTime nLastDate, QString nMname,QString nChannel);
      bool DelDataHistory(int nDelID);
      bool SelectdisDeviceName(QSqlQueryModel *OutGetDeviceNameAndChannel);
 
