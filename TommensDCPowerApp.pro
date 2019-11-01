@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql serialport
+QT       += core gui sql serialport xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,6 +24,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+        Device.cpp \
+        ModBusComInfo.cpp \
         WSDataBaseContol.cpp \
         basicsetdialog.cpp \
         main.cpp \
@@ -31,6 +33,8 @@ SOURCES += \
         writecomlogs.cpp
 
 HEADERS += \
+        Device.h \
+        ModBusComInfo.h \
         WSDataBaseContol.h \
         basicsetdialog.h \
         mainwindow.h \
