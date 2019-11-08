@@ -1,7 +1,7 @@
 #include "WSDataBaseContol.h"
 
 #include "writecomlogs.h"
-enum MaxVCP;
+
 WSDataBaseContol::WSDataBaseContol()
 {
 

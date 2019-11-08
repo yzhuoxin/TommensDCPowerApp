@@ -24,6 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+        Channel.cpp \
         Device.cpp \
         ModBusComInfo.cpp \
         WSDataBaseContol.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
         writecomlogs.cpp
 
 HEADERS += \
+        Channel.h \
         Device.h \
         ModBusComInfo.h \
         WSDataBaseContol.h \

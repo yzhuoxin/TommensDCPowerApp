@@ -1,6 +1,8 @@
 #ifndef MODBUSCOMINFO_H
 #define MODBUSCOMINFO_H
 #include <qapplication.h>
+#include "QSerialPort"
+#include"QSerialPortInfo"
 
 class ModBusComInfo
 {
@@ -15,8 +17,7 @@ public:
     QString Mname;
     //端口名称
     QString portName;
-    //设备硬件地址
-    unsigned char hostaddress;
+
     //采样频率
     int sampRate;
     //波特率
@@ -25,7 +26,7 @@ public:
     int readTimeOut;
     //写超时时间
     int writeTimeOut;
-
+QSerialPort *serial;
 
 
 
