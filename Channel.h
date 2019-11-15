@@ -2,7 +2,7 @@
 #define CHANNEL_H
 #include <qapplication.h>
 
-class Channel
+class Channel: public QObject
 {
 public:
     Channel();

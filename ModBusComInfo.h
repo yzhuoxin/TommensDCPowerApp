@@ -3,11 +3,15 @@
 #include <qapplication.h>
 #include "QSerialPort"
 #include"QSerialPortInfo"
+#include "QMutex"
+#include "QReadWriteLock"
 
-class ModBusComInfo
+class ModBusComInfo:public QObject
 {
 public:
     ModBusComInfo();
+    ~ModBusComInfo();
+
 public:
      //延迟时间
     int DelayTime;
@@ -26,10 +30,26 @@ public:
     int readTimeOut;
     //写超时时间
     int writeTimeOut;
-QSerialPort *serial;
+    QSerialPort *m_serialPort;
+   //
+    QMutex sMutex;
+  bool open();
 
 
+};
+class ModbusList:public QObject
+{
+public:
+   static QReadWriteLock listReadWriteLock;
+public:
+    ModbusList();
 
+    static QList <ModBusComInfo *> modBusList;
+   // static ModBusComInfo * GetAndCreatePortByName(QString portName);
+    static void addModbustoList(ModBusComInfo *newModbus);
+    static bool SearchbyPortName(QString mPortname);
+    static bool deleteAndFree(QString mPortName);
+    static bool FreeAllModBus();
 
 };
 

@@ -27,6 +27,7 @@ SOURCES += \
         Channel.cpp \
         Device.cpp \
         ModBusComInfo.cpp \
+        ShortCutKeyList.cpp \
         WSDataBaseContol.cpp \
         basicsetdialog.cpp \
         main.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
         Channel.h \
         Device.h \
         ModBusComInfo.h \
+        ShortCutKeyList.h \
         WSDataBaseContol.h \
         basicsetdialog.h \
         mainwindow.h \
