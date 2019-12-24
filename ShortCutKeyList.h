@@ -34,6 +34,7 @@ class ShortCutKeyList : public QObject
     Q_OBJECT
 public:
     explicit ShortCutKeyList(QObject *parent = nullptr);
+    ~ShortCutKeyList();
      QList<ShortCutKey*> mShortCutKeyList;
      QString ClassName;
      quint16 VoltageBytes=2;
@@ -42,8 +43,8 @@ public:
      quint16 EnableBytes = 2;
      ShortCutKey * getShortCutByID(QString ScID);
      ShortCutKey * getShortCutByName(QString Scname);
-     bool searchShortCutByID(QString mscID);
-     bool searchshortCutByName(QString sCname);
+    // bool searchShortCutByID(QString mscID);
+   //  bool searchshortCutByName(QString sCname);
      void addShortCutToList(ShortCutKey *mshortCutKey);
      bool FreeAllShortCut();
 

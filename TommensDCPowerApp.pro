@@ -27,6 +27,7 @@ SOURCES += \
         Channel.cpp \
         Device.cpp \
         ModBusComInfo.cpp \
+        ModbusCRC.cpp \
         ShortCutKeyList.cpp \
         WSDataBaseContol.cpp \
         basicsetdialog.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
         Channel.h \
         Device.h \
         ModBusComInfo.h \
+        ModbusCRC.h \
         ShortCutKeyList.h \
         WSDataBaseContol.h \
         basicsetdialog.h \

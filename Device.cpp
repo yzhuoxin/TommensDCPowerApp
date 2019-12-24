@@ -1,9 +1,9 @@
 #include "Device.h"
 
 
-Device::Device()
+Device::Device(  ModBusComInfo * mbsCom)
 {
-
+   DevCom=mbsCom;
 }
 /// <summary>
         // 分配缓冲------------------------------------------------------------------------------------------
@@ -12,14 +12,14 @@ Device::Device()
 bool Device::AllocateDevicePriBuff()
         {
             if (WriteSRegCommand == nullptr)
-                WriteSRegCommand = new  char[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
+                WriteSRegCommand = new uchar[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
             if (WriteSRegRecviByte == nullptr)
-                WriteSRegRecviByte = new char[_msize(WriteSRegCommand)];
+                WriteSRegRecviByte = new uchar[_msize(WriteSRegCommand)];
             // { WsModbusComInfo.HostAddress, (byte)DeviceRWFunction.WriteSReg, beginAddrsByte[1], beginAddrsByte[0], wDataByte[1], wDataByte[0] };
             if (ReadSRegCommand == nullptr)
-                ReadSRegCommand = new char[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
+                ReadSRegCommand = new uchar[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
             if (ReadSRegRecviByte == nullptr)
-                ReadSRegRecviByte = new char[RBuffHeadLength + AddressLength + CRCLength];
+                ReadSRegRecviByte = new uchar[RBuffHeadLength + AddressLength + CRCLength];
             ///控制VoltageCurrent线程专用
             return true;
         }
@@ -28,39 +28,46 @@ bool Device::AllocateDevicePriBuff()
 
            //监控数据缓冲
             if (GetVCPSendCommand==nullptr)
-                GetVCPSendCommand = new char[WBuffHeadLength + AddressLength +AddressLength + CRCLength];
+                GetVCPSendCommand = new uchar[WBuffHeadLength + AddressLength +AddressLength + CRCLength];
 
             if (GetVCPRecviByte==nullptr)
-                GetVCPRecviByte = new char[RBuffHeadLength + ProtectVolBytes + ProtectCurBytes + ProtectPowBytes + CRCLength];
+                GetVCPRecviByte = new uchar[RBuffHeadLength + ProtectVolBytes + ProtectCurBytes + ProtectPowBytes + CRCLength];
           //over current:over voltage:过Power缓冲
             if (GetOCPSendCommand==nullptr)
-                GetOCPSendCommand = new char[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
+                GetOCPSendCommand = new uchar[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
             if (GetOCPRecviByte == nullptr)
-                GetOCPRecviByte = new char[RBuffHeadLength +ProtectVolBytes +ProtectCurBytes + ProtectPowBytes + CRCLength];
+                GetOCPRecviByte = new uchar[RBuffHeadLength +ProtectVolBytes +ProtectCurBytes + ProtectPowBytes + CRCLength];
              //   { WsModbusComInfo.HostAddress, (byte)DeviceRWFunction.ReadMReg, getaddreHbyte((int)RegAddress.Voltage), getaddreLbyte((int)RegAddress.Voltage), 0x00, 0x04 };
 
             if (WriteControlCommand == nullptr)
-               WriteControlCommand = new char[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
+               WriteControlCommand = new uchar[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
             if (WriteControlRecviByte == nullptr)
-               WriteControlRecviByte = new char[_msize(WriteSRegCommand)];
+               WriteControlRecviByte = new uchar[_msize(WriteSRegCommand)];
            // if (SetShortCutKeyCommand==null)
           //      SetShortCutKeyCommand=new byte[WBuffHeadLength + AddressLength + AddressLength + CRCLength];
           //  if (SetShortCutKeyRecviByte==null)
          //       SetShortCutKeyRecviByte = new byte[RBuffHeadLength + VoltageBytes + CRCLength];//
             if (ReadSCKVolRecviByte == nullptr)
-                ReadSCKVolRecviByte = new char[RBuffHeadLength + WsShortCutKeyList.VoltageBytes + CRCLength];//;
+                ReadSCKVolRecviByte = new uchar[RBuffHeadLength + shortCutList.VoltageBytes + CRCLength];//;
             if (ReadSCKCurrRecviByte == nullptr)
             {
-                ReadSCKCurrRecviByte = new char[RBuffHeadLength + WsShortCutKeyList.CurrentBytes + CRCLength];
+                ReadSCKCurrRecviByte = new uchar[RBuffHeadLength + shortCutList.CurrentBytes + CRCLength];
             }
             if (ReadSCKSpanTimeRecviByte==nullptr)
             {
-                ReadSCKSpanTimeRecviByte = new char[RBuffHeadLength + WsShortCutKeyList.TimeSpanBytes + CRCLength];
+                ReadSCKSpanTimeRecviByte = new uchar[RBuffHeadLength + shortCutList.TimeSpanBytes + CRCLength];
             }
             if (ReadSCKSpanEnableBytes == nullptr)
             {
-                ReadSCKSpanEnableBytes = new char[RBuffHeadLength + WsShortCutKeyList.EnableBytes + CRCLength];
+                ReadSCKSpanEnableBytes = new uchar[RBuffHeadLength + shortCutList.EnableBytes + CRCLength];
             }
             return true;
         }
         //修改Address后要重新Setting采集发送数据
+void Device::AddCRCToArrayLast(uchar *targetData)
+{
+    uchar sHCRCBit;
+    uchar sLCRCbit;
+    ModbusCRC::CRC16Calc(targetData,_msize(targetData)-2,sHCRCBit,sLCRCbit);
+
+}

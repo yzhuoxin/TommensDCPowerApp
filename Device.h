@@ -2,12 +2,13 @@
 #define DEVICE_H
 #include "ModBusComInfo.h"
 #include "Channel.h"
-
+#include "ShortCutKeyList.h"
+#include "ModbusCRC.h"
 
 class Device:public QObject
 {
 public:
-    Device();
+    Device(  ModBusComInfo * mbsCom);
 public:
     enum  DeviceStat
        {
@@ -33,6 +34,7 @@ public:
      //暂时保留
      QList<Channel *> channellist;
      //通道数
+      ShortCutKeyList  shortCutList;
      int channelCount=1;
      //设备硬件地址
      unsigned char hostaddress;
@@ -131,28 +133,28 @@ public:
           uint OCPDataCount = 4;
           uint OneRegsiterLen = 1;
 
-           char * GetVCPSendCommand;
-           char * GetVCPRecviByte;
+           uchar * GetVCPSendCommand;
+           uchar * GetVCPRecviByte;
 
-           char * GetOCPSendCommand;
-           char * GetOCPRecviByte;
+           uchar * GetOCPSendCommand;
+           uchar * GetOCPRecviByte;
 
-           char * sSetShortCutKeyCommand;
-           char * ReadShortCutKeyCmd;
-           char * SSetShortCutKeyRecviByte;
-           char * ReadSCKVolRecviByte;
-           char * ReadSCKCurrRecviByte;
-           char * ReadSCKSpanTimeRecviByte;
-           char * ReadSCKSpanEnableBytes;
+           uchar * sSetShortCutKeyCommand;
+           uchar * ReadShortCutKeyCmd;
+           uchar * SSetShortCutKeyRecviByte;
+           uchar * ReadSCKVolRecviByte;
+           uchar * ReadSCKCurrRecviByte;
+           uchar * ReadSCKSpanTimeRecviByte;
+           uchar * ReadSCKSpanEnableBytes;
           //写单个数据
-           char * WriteSRegCommand;
-           char * WriteSRegRecviByte;
+           uchar * WriteSRegCommand;
+           uchar * WriteSRegRecviByte;
           //读单个数据 缓冲
-           char * ReadSRegCommand;
-           char * ReadSRegRecviByte;
+           uchar * ReadSRegCommand;
+           uchar * ReadSRegRecviByte;
           //写单个数据
-           char * WriteControlCommand;
-           char * WriteControlRecviByte;
+           uchar * WriteControlCommand;
+           uchar * WriteControlRecviByte;
       //------------------------------------------------------------------------------------//
           bool iFWriteLog = true;//是否写日志,初始化 写日志
 
@@ -204,8 +206,11 @@ public:
            float rOCPCurrent=0;
            float rOPPower=0;
 private:
+           void AddCRCToArrayLast(uchar *targetData);
+
            bool AllocateDevicePriBuff();
            bool AllocateDeviceBuff();
+
 };
 
 #endif // DEVICE_H
